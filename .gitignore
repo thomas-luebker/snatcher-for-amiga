@@ -1,0 +1,17 @@
+# Game data made from a disc must never be committed
+*.BIN
+*.bin
+*.cue
+*.iso
+*.MUS
+*.cdda
+*.SAV
+*.rom
+*.dylib
+*.so
+*.dll
+*.wav
+Snatcher/
+work/
+__pycache__/
+.DS_Store
