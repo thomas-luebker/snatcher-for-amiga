@@ -22,7 +22,7 @@ The disc:  Snatcher (USA), Sega CD, as bin/cue WITH the audio tracks (a redump s
 
 What it writes:
   SUBCODE.BIN SP*.BIN DATA_*.BIN PCM*.BIN   copied off the disc's data track
-  Snatcher.cdda                             the audio tracks, 8-bit for Paula (~62 MB)
+  Snatcher.cdda                             the audio tracks, 8-bit at 22030 Hz for Paula (~62 MB)
   SNATCHER.MUS                              the FM music (~54 MB)
 Each file is checked against snatcherdata.sha1, the files of the tested build. A file that
 differs is named at the end -- usually another disc image or another core version; the game

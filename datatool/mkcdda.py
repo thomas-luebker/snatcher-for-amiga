@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """CD audio for the Amiga runtime: redump audio tracks -> one Paula-ready blob.
 
-  mkcdda.py --tracks 2,3 [--rate 22050] [--out work/rt/Snatcher.cdda]
+  mkcdda.py --tracks 2,3 [--rate 22030] [--out work/rt/Snatcher.cdda]
   mkcdda.py --tracks all ...          every audio track (~62 MB: streamed from the IDE drive)
 
 Input: the redump track files (raw 16-bit LE stereo 44100) named in the cue under disc/scd-usa.
@@ -11,6 +11,10 @@ when it sits on the A1200's internal drive -- tools/mkdata.py):
   'SCDA'  ULONG rate  ULONG n   n x (ULONG track, ULONG offset, ULONG bytes)   data
 
 Data is 8-bit signed mono at `rate`, one byte per sample -- what Paula plays directly.
+The rate is 22030 Hz, not 22050: Paula plays at its clock divided by a whole number, and on a PAL
+Amiga 3546895 / 161 = 22030.4 Hz. Data at 22050 Hz was played 0.54% fast by engines up to 1.0 (they
+took period 160), which put the music 1.1 s ahead of the picture late in a long track; at 22030 Hz
+every engine version plays it at its own speed.
 The game data never enters the repo: the blob is built from the user's own disc at install time.
 """
 import argparse
@@ -51,7 +55,7 @@ def write(out, rate, entries, data):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tracks", default="2,3")
-    ap.add_argument("--rate", type=int, default=22050)
+    ap.add_argument("--rate", type=int, default=22030)
     ap.add_argument("--disc", default=os.path.join(ROOT, "disc/scd-usa"))
     ap.add_argument("--out", default=os.path.join(ROOT, "work/rt/Snatcher.cdda"))
     a = ap.parse_args()

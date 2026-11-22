@@ -12,7 +12,7 @@ Writes the data files of the engine package into the Snatcher drawer beside this
 package unpacks), which is then the complete game: the same files as the tested package. --out DIR
 writes them elsewhere.
   SUBCODE.BIN SP*.BIN DATA_*.BIN PCMLT_01.BIN PCMLD_01.BIN PCMDRMDT.BIN   copied off the data track
-  Snatcher.cdda    the audio tracks for Paula (8-bit mono 22050 Hz, tools/mkcdda.py)
+  Snatcher.cdda    the audio tracks for Paula (8-bit mono 22030 Hz, tools/mkcdda.py)
   SNATCHER.MUS     the FM music and effects, rendered by playing every sound code in Genesis Plus GX
                    (tools/fmrender.py + tools/mkmusic.py): needs the Sega CD BIOS to boot the disc and
                    the Genesis Plus GX libretro core; takes a while
@@ -33,7 +33,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import mkcdda  # noqa: E402
 
-RATE = 22050
+RATE = 22030                    # what a PAL Paula really plays (clock / 161): see mkcdda.py
 RAW, USER = 2352, 2048
 SPEC = re.compile(r"^(SUBCODE|SP\d\d|DATA_\w+|PCMLT_01|PCMLD_01|PCMDRMDT)\.BIN$")
 

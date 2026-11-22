@@ -1,10 +1,11 @@
 # Snatcher for the Amiga
 
 **Snatcher** (Konami, 1994), the English Sega CD version, running **natively on AmigaOS 3.x**. The
-game's own code rebuilt for the 68k: no emulator, AGA or RTG, with the CD audio, the FM music and
-the voices.
+game's own code rebuilt for the 68k: no emulator, on AGA, OCS/ECS or RTG, with the CD audio, the FM
+music and the voices.
 
-Shown for the first time at **Amiga Meeting Nord, 6–8 November 2026**.
+First shown at **Amiga Meeting Nord, 6–8 November 2026**. The current version is **1.1** (22 November
+2026): see [What's new](#whats-new-in-11).
 
 This repository holds the **DataTool**: the script that makes the game's data from **your own
 disc**. The Amiga engine itself comes as a download under [Releases](../../releases). Neither
@@ -22,8 +23,8 @@ there is no game.
   <https://buildbot.libretro.com/nightly/>.
 - **Python 3 with numpy** on a Mac, Linux or Windows PC (`pip install numpy`).
 - **An Amiga** with AmigaOS 3.1 or later, a 68020 or better and fast RAM. The target is a 68030
-  at 25 MHz with 32 MB fast RAM; a 68060 or a PiStorm draws every picture. AGA or an RTG card
-  (Picasso96 / CyberGraphX). About 200 MB free on a hard drive or CF card.
+  at 25 MHz with 32 MB fast RAM; a 68060 or a PiStorm draws every picture. AGA, OCS/ECS, or an RTG
+  card (Picasso96 / CyberGraphX). About 200 MB free on a hard drive or CF card.
 
 ## Making the game
 
@@ -44,8 +45,47 @@ there is no game.
 3. Copy the `Snatcher` drawer and `Snatcher.info` to the Amiga. The drawer must stay writable,
    because the saves go there. Then double-click one of these:
    - **Snatcher AGA:** a native AGA screen.
+   - **Snatcher OCS:** a native screen on the original or enhanced chipset, 32 colours.
    - **Snatcher Fullscreen:** its own 8-bit RTG screen.
    - **Snatcher:** a window on an RTG Workbench.
+
+## What's new in 1.1
+
+- **OCS/ECS.** *Snatcher OCS* runs the game on the original and the enhanced chipset. The game shows
+  up to 64 colours at once; the chipset's 32 colour registers are reloaded down the screen, and a
+  picture that needs more than that gives one colour up. Seen on an A3000 with a 68060; on a 68020
+  or 68030 it has run but nobody has watched it yet.
+- **Picture and sound together.** Version 1.0 played the CD music half a percent too fast, so late in
+  a long track (the take-off at the end of the intro) the music was more than a second ahead of the
+  picture. The engine now plays it at the right speed and keeps its clock to the music, and the
+  DataTool writes the audio at the rate the Amiga's sound chip really plays (22,030 Hz).
+- **Faster on a 68030.** About 12% less work per frame in the intro on an A1200 with a 68030 at
+  25 MHz, and the game runs at a higher task priority while it has its own screen.
+
+**Coming from 1.0:** replace `snatch-aga`, `snatch-rtg` and the start icons in your `Snatcher`
+drawer with the new ones, and keep your saves. Your game data works as it is. Running the DataTool
+again is optional: it only remakes `Snatcher.cdda` at the new rate, which also fixes the sync for
+the 1.0 engine.
+
+## How it runs
+
+Measured on real machines, all with the intro:
+
+| Machine | Display | |
+|---|---|---|
+| A1200, 68030 at 25 MHz | AGA | the game at full speed, a picture every second frame; scenes with many moving figures 24 pictures a second; a run of whole new screens (the take-off) visibly fewer |
+| A4000, 68060 at 50 MHz | AGA | every picture, 50 a second |
+| A3000, 68060 at 50 MHz | OCS/ECS | every picture, 50 a second |
+| A3000, 68060 at 50 MHz | RTG fullscreen (ZZ9000) | every picture; the game runs up to a quarter too fast, see below |
+| A3000, 68060 at 50 MHz | RTG window on a 1920x1080 16-bit Workbench | runs; slow where whole new screens follow each other (10 pictures a second there) |
+
+A stock A1200 (68EC020 at 14 MHz) has not been tested.
+
+**Known in 1.1, on a 68040 or 68060 with RTG:** the game takes its pace from the screen's refresh
+there, not from a clock. On a 60 Hz RTG screen it runs up to a quarter faster than it should
+(version 1.0 does the same), and in a window on a large high-colour Workbench it slows down in busy
+scenes. The music and the voices keep their own time. AGA and OCS/ECS screens are 50 Hz and are not
+affected. A fix is being worked on.
 
 ## Playing
 
