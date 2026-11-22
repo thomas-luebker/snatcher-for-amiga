@@ -4,7 +4,7 @@
 game's own code rebuilt for the 68k: no emulator, on AGA, OCS/ECS or RTG, with the CD audio, the FM
 music and the voices.
 
-First shown at **Amiga Meeting Nord, 6–8 November 2026**. The current version is **1.1** (22 November
+First shown at **Amiga Meeting Nord, 6–8 November 2026**. The current version is **1.1.1** (22 November
 2026): see [What's new](#whats-new-in-11).
 
 This repository holds the **DataTool**: the script that makes the game's data from **your own
@@ -51,6 +51,10 @@ there is no game.
 
 ## What's new in 1.1
 
+- **1.1.1: RTG keeps time.** With a graphics card on a 68040 or 68060 the game took its pace from
+  the screen's refresh: up to a quarter too fast on a 60 Hz screen, and slow in a window on a large
+  high-colour Workbench (1.0 and 1.1). It now runs at its 50 ticks a second by the clock and leaves
+  pictures out when it is behind.
 - **OCS/ECS.** *Snatcher OCS* runs the game on the original and the enhanced chipset. The game shows
   up to 64 colours at once; the chipset's 32 colour registers are reloaded down the screen, and a
   picture that needs more than that gives one colour up. Seen on an A3000 with a 68060; on a 68020
@@ -76,16 +80,10 @@ Measured on real machines, all with the intro:
 | A1200, 68030 at 25 MHz | AGA | the game at full speed, a picture every second frame; scenes with many moving figures 24 pictures a second; a run of whole new screens (the take-off) visibly fewer |
 | A4000, 68060 at 50 MHz | AGA | every picture, 50 a second |
 | A3000, 68060 at 50 MHz | OCS/ECS | every picture, 50 a second |
-| A3000, 68060 at 50 MHz | RTG fullscreen (ZZ9000) | every picture; the game runs up to a quarter too fast, see below |
-| A3000, 68060 at 50 MHz | RTG window on a 1920x1080 16-bit Workbench | runs; slow where whole new screens follow each other (10 pictures a second there) |
+| A3000, 68060 at 50 MHz | RTG fullscreen (ZZ9000) | the game at full speed; 37 to 47 pictures a second in the busiest scenes |
+| A3000, 68060 at 50 MHz | RTG window on a 1920x1080 16-bit Workbench | the game at full speed; 8 to 34 pictures a second in the busiest scenes |
 
 A stock A1200 (68EC020 at 14 MHz) has not been tested.
-
-**Known in 1.1, on a 68040 or 68060 with RTG:** the game takes its pace from the screen's refresh
-there, not from a clock. On a 60 Hz RTG screen it runs up to a quarter faster than it should
-(version 1.0 does the same), and in a window on a large high-colour Workbench it slows down in busy
-scenes. The music and the voices keep their own time. AGA and OCS/ECS screens are 50 Hz and are not
-affected. A fix is being worked on.
 
 ## Playing
 
